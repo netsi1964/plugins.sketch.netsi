@@ -1,30 +1,32 @@
 // SVGO v0.1α, by Ale Muñoz
 //
 // This Plugin compresses SVG assets using [SVGO](https://github.com/svg/svgo) right after they're exported from Sketch.
-// 
+//
 // It uses the new Action API in Sketch 3.8.
-
+//
 // This is the content of the `manifest.json` file for this Plugin. See how we're attaching the Plugin to the `ExportSlices.finish` event in `handlers.actions` by assigning a function name (`compressSVG`, defined in `svgo.js` to the action name we're interested in).
-var manifest = {
-  "author" : "Ale Muñoz",
-  "commands" : [
-    {
-      "script" : "svgo.js",
-      "name" : "SVGO",
-      "handlers" : {
-        "actions" : {
-          "ExportSlices.finish": "compressSVG"
-        }
-      },
-      "identifier" : "com.sketchapp.sketch.svgo"
-    }
-  ],
-  "identifier" : "com.sketchapp.sketch.8bbc676e-337d-408b-bd87-d0a4421e056e",
-  "version" : "0.1α",
-  "description" : "Uses SVGO to compress exported SVG assets.\nNote: it needs svgo installed somewhere on your path!",
-  "authorEmail" : "ale@sketchapp.com",
-  "name" : "SVGO (αlphα)"
-}
+// ```json
+// {
+//   "author" : "Ale Muñoz",
+//   "commands" : [
+//     {
+//       "script" : "svgo.js",
+//       "name" : "SVGO",
+//       "handlers" : {
+//         "actions" : {
+//           "ExportSlices.finish": "compressSVG"
+//         }
+//       },
+//       "identifier" : "com.sketchapp.sketch.svgo"
+//     }
+//   ],
+//   "identifier" : "com.sketchapp.sketch.8bbc676e-337d-408b-bd87-d0a4421e056e",
+//   "version" : "0.1α",
+//   "description" : "Uses SVGO to compress exported SVG assets.\nNote: it needs svgo installed somewhere on your path!",
+//   "authorEmail" : "ale@sketchapp.com",
+//   "name" : "SVGO (αlphα)"
+// }
+// ```
 
 // Utility function we'll use later, to remove duplicates on an Array
 var uniqueArray = function(arrArg) {
