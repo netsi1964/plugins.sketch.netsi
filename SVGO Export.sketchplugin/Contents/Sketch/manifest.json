@@ -7,14 +7,14 @@
     "authorEmail" : "ale@sketchapp.com",
     "commands" : [
     {
+      "name" : "SVGO Export",
+      "identifier" : "svgo-export",
       "script" : "svgo-export.js",
-      "name" : "SVGO",
       "handlers" : {
         "actions" : {
-          "ExportSlices.finish": "compressSVG"
+          "ExportSlices.finish": "onExportSlices"
         }
       },
-      "identifier" : "com.sketchapp.sketch.svgo"
     }
     ],
 }

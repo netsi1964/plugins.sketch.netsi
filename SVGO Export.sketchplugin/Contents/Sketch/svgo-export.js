@@ -65,9 +65,9 @@ function optimizeFolderWithSVGO(folderPath) {
 //   }]
 // }
 // ```
-// 
+//
 // In this particular example, there's only one item in the `exports` array, but if you've exported 10.000 assets it will be a bit more crowded. The `ExportSlices.finish` event is only called once for the whole export operation, rather than being triggered 10.000 times.
-var compressSVG = function(context){
+var onExportSlices = function(context){
   var exports = context.actionContext.exports,
       shouldCompressSVG = false,
       pathsToCompress = []
