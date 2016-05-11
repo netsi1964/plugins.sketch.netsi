@@ -29,33 +29,6 @@
 // }
 // ```
 
-// ### Helper Functions
-// Utility function we'll use later, to remove duplicates on an Array
-function uniqueArray(arrArg) {
-  return arrArg.filter(function(elem, pos,arr) {
-    return arr.indexOf(elem) == pos;
-  });
-};
-
-// This is the function where we'll do the heavy lifting (i.e: compress all SVG files in a given folder).
-// Make sure you either have svgo installed on `/usr/local/bin` or adjust the path accordingly in the code.
-// The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge they shouldn't effect the rendering of your assets, just reduce their size.
-function optimizeFolderWithSVGO(folderPath) {
-  var command = "/usr/local/bin/svgo --folder='" + folderPath + "' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData"
-
-  var task = [[NSTask alloc] init]
-  [task setLaunchPath:@"/bin/bash"]
-  [task setArguments:["-l", "-c", command]]
-  [task launch]
-  [task waitUntilExit]
-
-  if ([task terminationStatus] == 0) {
-    return true
-  } else {
-    return false
-  }
-}
-
 // ### Main Handler
 // This is the handler we defined on `manifest.json` for the event (`ExportSlices.finish`). It will be passed a `context` object as a parameter.
 // `context.actionContext` is the action that has been triggered, and it looks like this:
@@ -117,5 +90,32 @@ function onExportSlices(context){
     [ding launch]
   }
 }
+
+// ### Helper Functions
+// Utility function we'll use later, to remove duplicates on an Array
+function uniqueArray(arrArg) {
+  return arrArg.filter(function(elem, pos,arr) {
+    return arr.indexOf(elem) == pos;
+  });
+};
+
+function runCommand(command, args) {
+    var task = [[NSTask alloc] init]
+    [task setLaunchPath:command]
+    [task setArguments:args]
+    [task launch]
+    [task waitUntilExit]
+
+    return ([task terminationStatus] == 0)
+}
+
+// This is the function where we'll do the heavy lifting (i.e: compress all SVG files in a given folder).
+// Make sure you either have svgo installed on `/usr/local/bin` or adjust the path accordingly in the code.
+// The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge they shouldn't effect the rendering of your assets, just reduce their size.
+function optimizeFolderWithSVGO(folderPath) {
+  var command = "/usr/local/bin/svgo --folder='" + folderPath + "' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData"
+  return runCommand("/bin/bash", ["-l", "-c", command])
+}
+
 
 // If you have questions, comments or any feedback, ping us at <developer@sketchapp.com>!
