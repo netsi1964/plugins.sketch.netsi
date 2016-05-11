@@ -7,10 +7,15 @@
 // This is the content of the `manifest.json` file for this Plugin. See how we're attaching the Plugin to the `ExportSlices.finish` event in `handlers.actions` by assigning a function name (`compressSVG`, defined in `svgo.js` to the action name we're interested in).
 // ```json
 // {
-//   "author" : "Ale Muñoz",
-//   "commands" : [
+//     "name" : "SVGO Export",
+//     "description" : "Uses SVGO to compress exported SVG assets.\nNote: it needs svgo installed somewhere on your path!",
+//     "version" : "1.0",
+//     "identifier" : "com.sketchapp.examples.svgo-export",
+//     "author" : "Ale Muñoz",
+//     "authorEmail" : "ale@sketchapp.com",
+//     "commands" : [
 //     {
-//       "script" : "svgo.js",
+//       "script" : "svgo-export.js",
 //       "name" : "SVGO",
 //       "handlers" : {
 //         "actions" : {
@@ -19,12 +24,7 @@
 //       },
 //       "identifier" : "com.sketchapp.sketch.svgo"
 //     }
-//   ],
-//   "identifier" : "com.sketchapp.sketch.8bbc676e-337d-408b-bd87-d0a4421e056e",
-//   "version" : "0.1α",
-//   "description" : "Uses SVGO to compress exported SVG assets.\nNote: it needs svgo installed somewhere on your path!",
-//   "authorEmail" : "ale@sketchapp.com",
-//   "name" : "SVGO (αlphα)"
+//     ],
 // }
 // ```
 
