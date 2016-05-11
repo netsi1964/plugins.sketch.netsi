@@ -1,9 +1,10 @@
-// SVGO v0.1α, by Ale Muñoz — Source code available at [GitHub](https://github.com/BohemianCoding/plugins.examples.svgo-export)
+// SVGO Export, by Ale Muñoz — Source code available at [GitHub](https://github.com/BohemianCoding/plugins.examples.svgo-export)
 //
 // This Plugin compresses SVG assets using [SVGO](https://github.com/svg/svgo) right after they're exported from Sketch.
 //
 // It uses the new Action API in Sketch 3.8, and requires svgo to be installed in `/usr/local/bin`
 //
+// ### Manifest
 // This is the content of the `manifest.json` file for this Plugin. See how we're attaching the Plugin to the `ExportSlices.finish` event in `handlers.actions` by assigning a function name (`compressSVG`, defined in `svgo.js` to the action name we're interested in).
 // ```json
 // {
@@ -15,19 +16,20 @@
 //     "authorEmail" : "ale@sketchapp.com",
 //     "commands" : [
 //     {
+//       "name" : "SVGO Export",
+//       "identifier" : "svgo-export",
 //       "script" : "svgo-export.js",
-//       "name" : "SVGO",
 //       "handlers" : {
 //         "actions" : {
-//           "ExportSlices.finish": "compressSVG"
+//           "ExportSlices.finish": "onExportSlices"
 //         }
 //       },
-//       "identifier" : "com.sketchapp.sketch.svgo"
 //     }
 //     ],
 // }
 // ```
 
+// ### Helper Functions
 // Utility function we'll use later, to remove duplicates on an Array
 function uniqueArray(arrArg) {
   return arrArg.filter(function(elem, pos,arr) {
@@ -54,6 +56,7 @@ function optimizeFolderWithSVGO(folderPath) {
   }
 }
 
+// ### Main Handler
 // This is the handler we defined on `manifest.json` for the event (`ExportSlices.finish`). It will be passed a `context` object as a parameter.
 // `context.actionContext` is the action that has been triggered, and it looks like this:
 // ```json
@@ -68,6 +71,7 @@ function optimizeFolderWithSVGO(folderPath) {
 //
 // In this particular example, there's only one item in the `exports` array, but if you've exported 10.000 assets it will be a bit more crowded. The `ExportSlices.finish` event is only called once for the whole export operation, rather than being triggered 10.000 times.
 function onExportSlices(context){
+    log("test");
   var exports = context.actionContext.exports,
       shouldCompressSVG = false,
       pathsToCompress = []
