@@ -29,7 +29,7 @@
 // ```
 
 // Utility function we'll use later, to remove duplicates on an Array
-var uniqueArray = function(arrArg) {
+function uniqueArray(arrArg) {
   return arrArg.filter(function(elem, pos,arr) {
     return arr.indexOf(elem) == pos;
   });
@@ -67,7 +67,7 @@ function optimizeFolderWithSVGO(folderPath) {
 // ```
 //
 // In this particular example, there's only one item in the `exports` array, but if you've exported 10.000 assets it will be a bit more crowded. The `ExportSlices.finish` event is only called once for the whole export operation, rather than being triggered 10.000 times.
-var onExportSlices = function(context){
+function onExportSlices(context){
   var exports = context.actionContext.exports,
       shouldCompressSVG = false,
       pathsToCompress = []
