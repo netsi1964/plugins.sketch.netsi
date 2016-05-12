@@ -77,28 +77,52 @@ function onExportSlices(context){
       }
     }
     // And finally, make some noise to let the user know if the command worked as expected or not (this can take a while if you're exporting many assets, so it's a nice touch :-)
-    var ding = [[NSTask alloc] init],
-        audio = ""
-
-    [ding setLaunchPath:@"/bin/bash"]
     if (success) {
       audio = "Glass"
     } else {
       audio = "Basso"
     }
-    [ding setArguments:["-c", "afplay /System/Library/Sounds/" + audio + ".aiff"]]
-    [ding launch]
+    playSystemSound(audio)
   }
 }
 
 // ### Helper Functions
-// Utility function we'll use later, to remove duplicates on an Array
+
+// This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files in a given folder).
+// Make sure you either have node and svgo installed in `/usr/local/bin` or adjust the path accordingly in the code.
+// The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
+// they shouldn't effect the rendering of your assets, just reduce their size.
+function optimizeFolderWithSVGO(folderPath) {
+    args = [
+        "/usr/local/bin/svgo",
+        "--folder='" + folderPath + "'",
+        "--pretty",
+        "--disable=convertShapeToPath",
+        "--enable=removeTitle",
+        "--enable=removeDesc",
+        "--enable=removeDoctype",
+        "--enable=removeEmptyAttrs",
+        "--enable=removeUnknownsAndDefaults",
+        "--enable=removeUnusedNS",
+        "--enable=removeEditorsNSData"
+    ]
+
+    return runCommand("/usr/local/bin/node", args)
+}
+
+// Utility function to play a given system sound.
+function playSystemSound(sound) {
+    runCommand("/usr/bin/afplay", ["/System/Library/Sounds/" + sound + ".aiff"])
+}
+
+// Utility function to remove duplicates on an Array.
 function uniqueArray(arrArg) {
   return arrArg.filter(function(elem, pos,arr) {
     return arr.indexOf(elem) == pos;
   });
 };
 
+// Utility function to run a command line command with a set of arguments.
 function runCommand(command, args) {
     var task = NSTask.alloc().init();
     task.launchPath = command;
@@ -107,14 +131,6 @@ function runCommand(command, args) {
     task.waitUntilExit();
 
     return (task.terminationStatus() == 0)
-}
-
-// This is the function where we'll do the heavy lifting (i.e: compress all SVG files in a given folder).
-// Make sure you either have svgo installed on `/usr/local/bin` or adjust the path accordingly in the code.
-// The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge they shouldn't effect the rendering of your assets, just reduce their size.
-function optimizeFolderWithSVGO(folderPath) {
-  var command = "/usr/local/bin/svgo --folder='" + folderPath + "' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData"
-  return runCommand("/bin/bash", ["-l", "-c", command])
 }
 
 
