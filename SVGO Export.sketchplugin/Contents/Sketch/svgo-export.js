@@ -84,7 +84,9 @@ function onExportSlices(context){
 // ### Helper Functions
 
 // This is the function where we call out to svgo to do the heavy lifting (i.e: compress all SVG files in a given folder).
+//
 // Make sure you either have node and svgo installed in `/usr/local/bin` or adjust the path accordingly in the code.
+//
 // The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
 // they shouldn't effect the rendering of your assets, just reduce their size.
 function optimizeFolderWithSVGO(folderPath) {
@@ -106,7 +108,10 @@ function optimizeFolderWithSVGO(folderPath) {
 }
 
 // Utility function to play a given system sound.
+//
 function playSystemSound(sound) {
+    // The command line tool `afplay` does what we need - we just have to call it with the full path
+    // of a system sound.
     runCommand("/usr/bin/afplay", ["/System/Library/Sounds/" + sound + ".aiff"])
 }
 
