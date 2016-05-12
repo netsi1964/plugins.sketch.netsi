@@ -100,13 +100,13 @@ function uniqueArray(arrArg) {
 };
 
 function runCommand(command, args) {
-    var task = [[NSTask alloc] init]
-    [task setLaunchPath:command]
-    [task setArguments:args]
-    [task launch]
-    [task waitUntilExit]
+    var task = NSTask.alloc().init();
+    task.launchPath = command;
+    task.arguments = args;
+    task.launch();
+    task.waitUntilExit();
 
-    return ([task terminationStatus] == 0)
+    return (task.terminationStatus() == 0)
 }
 
 // This is the function where we'll do the heavy lifting (i.e: compress all SVG files in a given folder).
