@@ -97,6 +97,8 @@ function onExportSlices(context){
 // they shouldn't effect the rendering of your assets, just reduce their size.
 function optimizeFolderWithSVGO(folderPath) {
     args = [
+        "-l",
+        "-c",
         "/usr/local/bin/svgo",
         "--folder='" + folderPath + "'",
         "--pretty",
@@ -109,8 +111,7 @@ function optimizeFolderWithSVGO(folderPath) {
         "--enable=removeUnusedNS",
         "--enable=removeEditorsNSData"
     ]
-
-    return runCommand("/usr/local/bin/node", args)
+    return runCommand("/bin/bash", args)
 }
 
 // Utility function to play a given system sound.
@@ -135,9 +136,8 @@ function runCommand(command, args) {
     task.arguments = args;
     task.launch();
     task.waitUntilExit();
-
     return (task.terminationStatus() == 0)
 }
 
 
-// If you have questions, comments or any feedback, ping us at <developer@sketchapp.com>!
+// If you have questions, comments or any feedback, ping us at <developers@sketchapp.com>!
