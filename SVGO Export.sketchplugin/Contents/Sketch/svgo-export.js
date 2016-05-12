@@ -70,7 +70,6 @@ function onExportSlices(context){
     for (var p=0; p < paths.length; p++) {
       var path = paths[p]
       log('Compressing SVG files in ' + path)
-
       // ...doing the export, and log the result to the console
       if(optimizeFolderWithSVGO(paths[p])) {
         log('✅ compression ok')
@@ -96,30 +95,19 @@ function onExportSlices(context){
 // The SVGO options are based on our experience working with Sketch's exported SVGs, and to the best of our knowledge
 // they shouldn't effect the rendering of your assets, just reduce their size.
 function optimizeFolderWithSVGO(folderPath) {
-    args = [
-        "-l",
-        "-c",
-        "/usr/local/bin/svgo",
-        "--folder='" + folderPath + "'",
-        "--pretty",
-        "--disable=convertShapeToPath",
-        "--enable=removeTitle",
-        "--enable=removeDesc",
-        "--enable=removeDoctype",
-        "--enable=removeEmptyAttrs",
-        "--enable=removeUnknownsAndDefaults",
-        "--enable=removeUnusedNS",
-        "--enable=removeEditorsNSData"
-    ]
-    return runCommand("/bin/bash", args)
+  var args = [
+    "-l",
+    "-c",
+    "svgo --folder='" + folderPath + "' --pretty --disable=convertShapeToPath --enable=removeTitle --enable=removeDesc --enable=removeDoctype --enable=removeEmptyAttrs --enable=removeUnknownsAndDefaults --enable=removeUnusedNS --enable=removeEditorsNSData"
+  ]
+  return runCommand("/bin/bash", args)
 }
 
 // Utility function to play a given system sound.
-//
 function playSystemSound(sound) {
-    // The command line tool `afplay` does what we need - we just have to call it with the full path
-    // of a system sound.
-    runCommand("/usr/bin/afplay", ["/System/Library/Sounds/" + sound + ".aiff"])
+  // The command line tool `afplay` does what we need - we just have to call it with the full path
+  // of a system sound.
+  runCommand("/usr/bin/afplay", ["/System/Library/Sounds/" + sound + ".aiff"])
 }
 
 // Utility function to remove duplicates on an Array.
@@ -131,12 +119,12 @@ function uniqueArray(arrArg) {
 
 // Utility function to run a command line command with a set of arguments.
 function runCommand(command, args) {
-    var task = NSTask.alloc().init();
-    task.launchPath = command;
-    task.arguments = args;
-    task.launch();
-    task.waitUntilExit();
-    return (task.terminationStatus() == 0)
+  var task = NSTask.alloc().init();
+  task.launchPath = command;
+  task.arguments = args;
+  task.launch();
+  task.waitUntilExit();
+  return (task.terminationStatus() == 0)
 }
 
 
