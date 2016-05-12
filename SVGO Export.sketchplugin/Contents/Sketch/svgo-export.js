@@ -61,22 +61,28 @@ function onExportSlices(context){
 
   // Time to compress some folders
   if (shouldCompressSVG) {
-    // Let's remove duplicates
+
+    // Let's remove duplicates so that we only compress each one once.
     var paths = uniqueArray(pathsToCompress),
-        success = false
+        success = true
+
+    // Now we run through each one...
     for (var p=0; p < paths.length; p++) {
       var path = paths[p]
       log('Compressing SVG files in ' + path)
-      // Exporting!
+
+      // ...doing the export, and log the result to the console
       if(optimizeFolderWithSVGO(paths[p])) {
         log('✅ compression ok')
-        success = true
       } else {
         log('❌ compression error')
         success = false
       }
     }
-    // And finally, make some noise to let the user know if the command worked as expected or not (this can take a while if you're exporting many assets, so it's a nice touch :-)
+
+    // Finally, make some noise to let the user know that we're done, and if everything went according to plan.
+    //
+    // The compression can take a while if you're exporting many assets, so it's a nice touch :-)
     playSystemSound(success ? "Glass" : "Basso")
   }
 }
