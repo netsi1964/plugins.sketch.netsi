@@ -77,12 +77,7 @@ function onExportSlices(context){
       }
     }
     // And finally, make some noise to let the user know if the command worked as expected or not (this can take a while if you're exporting many assets, so it's a nice touch :-)
-    if (success) {
-      audio = "Glass"
-    } else {
-      audio = "Basso"
-    }
-    playSystemSound(audio)
+    playSystemSound(success ? "Glass" : "Basso")
   }
 }
 
