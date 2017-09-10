@@ -1,3 +1,3 @@
-# plugins.examples.svgo-export
+# plugins.sketch.netsi
 
-Example Plugin illustrating how to hook into the `ExportSlices` action
+My small Sketch utilities
